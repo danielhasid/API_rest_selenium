@@ -48,5 +48,3 @@ def get_user(user_id):
     cursor.close()
     conn.close()
 
-
-

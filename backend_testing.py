@@ -1,21 +1,25 @@
-from rest_app import post_user, get_user_api
 import requests
 #
-USER_ID = input("Add User ID: ")
-NAME = input("Add User Name: ")
+USER_ID = 666666
+NAME = 'Daniel'
 
 
+def post_user(user_id,user_name):
+    res = requests.post(f"http://127.0.0.1:5000/users/{user_id}", json={"user_name":user_name})
+    if res.status_code==200:
+        print(res.json())
+    elif res.status_code==500:
+        print(res.json())
 
-def check_user(USER_ID,NAME):
-    data_from_db = get_user_api(USER_ID,NAME)
-    if data_from_db['code'] == 200 and NAME ==data_from_db['user_name']:
-        if USER_ID==data_from_db['user_id'] and NAME == data_from_db['user_name']:
-            print(f"The user name is : {data_from_db['user_name']} and user ID {data_from_db['user_id']} are stored inside DB")
+def get_user_api(user_id):
+    res = requests.get(f"http://127.0.0.1:5000/users/{user_id}")
+    if res.ok:
+        print(res.text)
     else:
-        print(f"{data_from_db['user_name']} Not Found")
+        print(res.text)
 
-result = post_user(USER_ID,NAME)
-if result['status']=='saved':
-    check_user(USER_ID,NAME)
-else:
-    print("User Already Exists")
+
+post_user(USER_ID,NAME)
+get_user_api(88888)
+
+# {'status': 'ok','user_id':user_id, 'user_name': user_name , 'code': 200}
