@@ -9,32 +9,31 @@ pipeline {
 
     stage('run_rest_app') {
       steps {
-        sh 'python3 rest_app.py'
-        sh 'python3 web_app.py'
+        sh 'python3 https://github.com/danielhasid/API_rest_selenium.git rest_app.py'
       }
     }
 
     stage('web_app') {
       steps {
-        sh 'python3 web_app.py'
+        sh 'python3 https://github.com/danielhasid/API_rest_selenium.git web_app.py'
       }
     }
 
     stage('backend_testing') {
       steps {
-        sh 'python3 backend_testing.py'
+        sh 'python3 https://github.com/danielhasid/API_rest_selenium.git backend_testing.py'
       }
     }
 
     stage('frontend _testing') {
       steps {
-        sh 'python3 frontend _testing.py'
+        sh 'python3 https://github.com/danielhasid/API_rest_selenium.git frontend _testing.py'
       }
     }
 
-    stage('combined_testing') {
+    stage('clean_environment') {
       steps {
-        sh 'python3 combined_testing.py'
+        sh 'python3 https://github.com/danielhasid/API_rest_selenium.git clean_environment.py'
       }
     }
 
