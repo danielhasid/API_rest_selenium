@@ -7,5 +7,11 @@ pipeline {
       }
     }
 
+    stage('run_rest_app') {
+      steps {
+        sh 'python3 rest_app.py'
+      }
+    }
+
   }
 }
