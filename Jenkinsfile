@@ -20,5 +20,23 @@ pipeline {
       }
     }
 
+    stage('backend_testing') {
+      steps {
+        sh 'python3 backend_testing.py'
+      }
+    }
+
+    stage('frontend _testing') {
+      steps {
+        sh 'python3 frontend _testing.py'
+      }
+    }
+
+    stage('combined_testing') {
+      steps {
+        sh 'python3 combined_testing.py'
+      }
+    }
+
   }
 }
