@@ -14,5 +14,11 @@ pipeline {
       }
     }
 
+    stage('web_app') {
+      steps {
+        sh 'python3 web_app.py'
+      }
+    }
+
   }
 }
