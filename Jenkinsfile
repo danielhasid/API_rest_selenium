@@ -1,41 +1,39 @@
 pipeline {
-  agent any
-  stages {
-    stage('pull_code') {
-      steps {
-        sh 'git pull'
-      }
+    agent any
+    stages {
+        stage('checkout') {
+            steps {
+                script {
+                    properties([pipelineTriggers([pollSCM('* * * * *')])])
+                }
+                git 'https://github.com/Dgotlieb/JenkinsTest.git'
+            }
+        }
+        stage('run python') {
+            steps {
+                script {
+                    if (checkOs() == 'Windows') {
+                        bat 'python 1.py'
+                    } else {
+                        sh 'python 1.py'
+                    }
+                }
+            }
+        }
     }
+}
 
-    stage('run_rest_app') {
-      steps {
-        sh 'python3 https://github.com/danielhasid/API_rest_selenium.git rest_app.py'
-      }
+def checkOs(){
+    if (isUnix()) {
+        def uname = sh script: 'uname', returnStdout: true
+        if (uname.startsWith("Darwin")) {
+            return "Macos"
+        }
+        else {
+            return "Linux"
+        }
     }
-
-    stage('web_app') {
-      steps {
-        sh 'python3 https://github.com/danielhasid/API_rest_selenium.git web_app.py'
-      }
+    else {
+        return "Windows"
     }
-
-    stage('backend_testing') {
-      steps {
-        sh 'python3 https://github.com/danielhasid/API_rest_selenium.git backend_testing.py'
-      }
-    }
-
-    stage('frontend _testing') {
-      steps {
-        sh 'python3 https://github.com/danielhasid/API_rest_selenium.git frontend _testing.py'
-      }
-    }
-
-    stage('clean_environment') {
-      steps {
-        sh 'python3 https://github.com/danielhasid/API_rest_selenium.git clean_environment.py'
-      }
-    }
-
-  }
 }
